@@ -33,7 +33,7 @@
 #include <cstring>
 #include <algorithm>
 
-#ifdef ENABLE_SDL_COLOR
+#ifdef COLORFUNC_ENABLE_SDL_COLOR
 #include <SDL2/SDL.h>
 #endif
 
@@ -57,22 +57,22 @@ namespace ColorFunc
 
     constexpr uint8_t R(uint32_t nRGBA)
     {
-        return (nRGBA & MASK_R) << SHIFT_R;
+        return (nRGBA & MASK_R) >> SHIFT_R;
     }
 
     constexpr uint8_t G(uint32_t nRGBA)
     {
-        return (nRGBA & MASK_G) << SHIFT_G;
+        return (nRGBA & MASK_G) >> SHIFT_G;
     }
 
     constexpr uint8_t B(uint32_t nRGBA)
     {
-        return (nRGBA & MASK_B) << SHIFT_B;
+        return (nRGBA & MASK_B) >> SHIFT_B;
     }
 
     constexpr uint8_t A(uint32_t nRGBA)
     {
-        return (nRGBA & MASK_A) << SHIFT_A;
+        return (nRGBA & MASK_A) >> SHIFT_A;
     }
 
     constexpr uint32_t RGBA(uint8_t nR, uint8_t nG, uint8_t nB, uint8_t nA)
@@ -171,7 +171,7 @@ namespace ColorFunc
         return bFind;
     }
 
-#ifdef ENABLE_SDL_COLOR
+#ifdef COLORFUNC_ENABLE_SDL_COLOR
     inline SDL_Color RGBA2Color(uint8_t nR, uint8_t nG, uint8_t nB, uint8_t nA)
     {
         SDL_Color stColor;
