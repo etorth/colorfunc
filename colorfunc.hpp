@@ -28,6 +28,7 @@
 #ifndef __COLOR_FUNC_HPP__
 #define __COLOR_FUNC_HPP__
 
+#include <array>
 #include <cmath>
 #include <cstdio>
 #include <cstring>
@@ -115,6 +116,25 @@ namespace ColorFunc
         nDstA = std::min<uint8_t>(255, std::lround((nSrcA *   1.0)         + (1.0 - nSrcA / 255.0) * nDstA));
 
         return RGBA(nDstR, nDstG, nDstB, nDstA);
+    }
+
+    template<size_t ColorCount> std::array<uint32_t, ColorCount> GradientColor(uint32_t nColor0, uint32_t nColor1)
+    {
+        static_assert(ColorCount > 0);
+        std::array<uint32_t, ColorCount> stvGradientColor;
+        for(size_t nIndex = 0; nIndex < ColorCount; ++nIndex){
+            auto nR = R(nColor0) + std::lround((R(nColor1) - R(nColor0)) * (nIndex * 1.0 / ColorCount));
+            auto nG = G(nColor0) + std::lround((G(nColor1) - G(nColor0)) * (nIndex * 1.0 / ColorCount));
+            auto nB = B(nColor0) + std::lround((B(nColor1) - B(nColor0)) * (nIndex * 1.0 / ColorCount));
+            auto nA = A(nColor0) + std::lround((A(nColor1) - A(nColor0)) * (nIndex * 1.0 / ColorCount));
+
+            uint8_t nR255 = (nR < 0) ? 0 : ((nR > 255) ? 255 : nR);
+            uint8_t nG255 = (nG < 0) ? 0 : ((nG > 255) ? 255 : nG);
+            uint8_t nB255 = (nB < 0) ? 0 : ((nB > 255) ? 255 : nB);
+            uint8_t nA255 = (nA < 0) ? 0 : ((nA > 255) ? 255 : nA);
+            stvGradientColor[nIndex] = RGBA(nR255, nG255, nB255, nA255);
+        }
+        return stvGradientColor;
     }
 
     inline bool String2Color(uint32_t *pColor, const char *szText)
