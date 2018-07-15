@@ -118,15 +118,15 @@ namespace ColorFunc
         return RGBA(nDstR, nDstG, nDstB, nDstA);
     }
 
-    template<size_t ColorCount> std::array<uint32_t, ColorCount> GradientColor(uint32_t nColor0, uint32_t nColor1)
+    template<size_t GradientCount> std::array<uint32_t, GradientCount> GradientColor(uint32_t nColor0, uint32_t nColor1)
     {
-        static_assert(ColorCount > 0);
-        std::array<uint32_t, ColorCount> stvGradientColor;
-        for(size_t nIndex = 0; nIndex < ColorCount; ++nIndex){
-            auto nR = R(nColor0) + std::lround((R(nColor1) - R(nColor0)) * (nIndex * 1.0 / ColorCount));
-            auto nG = G(nColor0) + std::lround((G(nColor1) - G(nColor0)) * (nIndex * 1.0 / ColorCount));
-            auto nB = B(nColor0) + std::lround((B(nColor1) - B(nColor0)) * (nIndex * 1.0 / ColorCount));
-            auto nA = A(nColor0) + std::lround((A(nColor1) - A(nColor0)) * (nIndex * 1.0 / ColorCount));
+        static_assert(GradientCount >= 2);
+        std::array<uint32_t, GradientCount> stvGradientColor;
+        for(size_t nIndex = 0; nIndex < GradientCount; ++nIndex){
+            auto nR = R(nColor0) + std::lround((R(nColor1) - R(nColor0)) * (nIndex * 1.0 / (GradientCount - 1)));
+            auto nG = G(nColor0) + std::lround((G(nColor1) - G(nColor0)) * (nIndex * 1.0 / (GradientCount - 1)));
+            auto nB = B(nColor0) + std::lround((B(nColor1) - B(nColor0)) * (nIndex * 1.0 / (GradientCount - 1)));
+            auto nA = A(nColor0) + std::lround((A(nColor1) - A(nColor0)) * (nIndex * 1.0 / (GradientCount - 1)));
 
             uint8_t nR255 = (nR < 0) ? 0 : ((nR > 255) ? 255 : nR);
             uint8_t nG255 = (nG < 0) ? 0 : ((nG > 255) ? 255 : nG);
