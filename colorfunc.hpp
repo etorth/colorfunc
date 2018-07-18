@@ -86,6 +86,11 @@ namespace ColorFunc
         return RGBA(fR * 255, fG * 255, fB * 255, fA * 255);
     }
 
+    template<typename T> constexpr uint8_t Round255(T nValue)
+    {
+        return (nValue < 0) ? 0 : ((nValue > 255) : 255 : nValue);
+    }
+
     enum ColorConst: uint32_t
     {
         RED     = RGBA(0XFF, 0X00, 0X00, 0X00),
