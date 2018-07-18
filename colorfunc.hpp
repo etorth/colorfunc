@@ -88,7 +88,7 @@ namespace ColorFunc
 
     template<typename T> constexpr uint8_t Round255(T nValue)
     {
-        return (nValue < 0) ? 0 : ((nValue > 255) : 255 : nValue);
+        return (nValue < 0) ? 0 : ((nValue > 255) ? 255 : nValue);
     }
 
     enum ColorConst: uint32_t
